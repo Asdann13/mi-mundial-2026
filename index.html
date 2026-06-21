@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#063b2a">
+  <title>Mi Mundial 2026</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__glow hero__glow--one"></div>
+    <div class="hero__glow hero__glow--two"></div>
+    <div class="hero__content">
+      <div>
+        <p class="eyebrow">SIMULADOR PERSONAL · MUNDIAL 2026</p>
+        <h1>Mi Mundial</h1>
+        <p class="hero__copy">Escribe los marcadores y mira cómo cambia el camino a la final.</p>
+      </div>
+      <div class="hero__actions">
+        <label class="scenario-picker">
+          <span>Escenario</span>
+          <select id="scenario-select" aria-label="Escenario guardado">
+            <option value="">Partida actual</option>
+          </select>
+        </label>
+        <button class="button button--light" id="save-scenario">Guardar escenario</button>
+        <button class="icon-button" id="more-actions" aria-label="Más acciones" aria-expanded="false">•••</button>
+        <div class="actions-menu" id="actions-menu" hidden>
+          <button id="export-data">Exportar respaldo</button>
+          <label for="import-file">Importar respaldo</label>
+          <input id="import-file" type="file" accept="application/json" hidden>
+          <button class="danger-text" id="delete-scenario">Eliminar escenario</button>
+          <button class="danger-text" id="reset-all">Borrar marcadores</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-shell">
+      <div class="progress-copy">
+        <span id="progress-label">0 de 72 partidos de grupos</span>
+        <strong id="progress-percent">0%</strong>
+      </div>
+      <div class="progress-track"><div id="progress-bar"></div></div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Secciones del simulador">
+    <button class="tab is-active" data-view="groups">Grupos</button>
+    <button class="tab" data-view="thirds">Mejores terceros <span id="thirds-badge">0/8</span></button>
+    <button class="tab" data-view="bracket">Cruces</button>
+  </nav>
+
+  <main>
+    <section class="view is-active" id="groups-view">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">FASE DE GRUPOS</p>
+          <h2>Todos los partidos</h2>
+        </div>
+        <p>Los cambios se guardan automáticamente en este computador.</p>
+      </div>
+      <div class="group-filter" id="group-filter" aria-label="Filtrar por grupo"></div>
+      <div class="groups-grid" id="groups-grid"></div>
+    </section>
+
+    <section class="view" id="thirds-view">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">CLASIFICACIÓN GENERAL</p>
+          <h2>Mejores terceros</h2>
+        </div>
+        <p>Los ocho primeros avanzan a dieciseisavos.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-card__icon">i</span>
+        <p>Mientras falten partidos, esta tabla es una <strong>proyección</strong>. En empates absolutos, el reglamento usa conducta deportiva y otros criterios que requieren datos adicionales.</p>
+      </div>
+      <div class="table-card table-card--wide">
+        <div class="thirds-table" id="thirds-table"></div>
+      </div>
+    </section>
+
+    <section class="view" id="bracket-view">
+      <div class="section-heading bracket-heading">
+        <div>
+          <p class="kicker">CAMINO A LA FINAL</p>
+          <h2>Cuadro eliminatorio</h2>
+        </div>
+        <span class="projection-pill" id="projection-pill">Esperando resultados</span>
+      </div>
+      <div class="info-card" id="bracket-info">
+        <span class="info-card__icon">i</span>
+        <p>Completa algunos marcadores para ver la proyección de los cruces. Al terminar los 72 partidos, la asignación de los mejores terceros queda definida con la tabla oficial de FIFA.</p>
+      </div>
+      <div class="bracket-board" id="bracket-board"></div>
+      <div class="champion-card" id="champion-card" hidden></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Hecho para simular, probar y sufrir con tranquilidad.</span>
+    <span>Reglas y cruces: reglamento FIFA World Cup 26™.</span>
+  </footer>
+
+  <dialog id="scenario-dialog">
+    <form method="dialog" id="scenario-form">
+      <button class="dialog-close" value="cancel" aria-label="Cerrar">×</button>
+      <p class="kicker">GUARDAR UNA COPIA</p>
+      <h2>Nombre del escenario</h2>
+      <p>Por ejemplo: “Colombia primera del grupo” o “Final soñada”.</p>
+      <input id="scenario-name" maxlength="50" autocomplete="off" placeholder="Mi escenario" required>
+      <div class="dialog-actions">
+        <button class="button button--ghost" value="cancel">Cancelar</button>
+        <button class="button button--primary" id="confirm-save" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="third-place-map.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
