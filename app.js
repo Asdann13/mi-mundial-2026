@@ -268,16 +268,18 @@
   }
 
   function renderThirds() {
-    const head = `<div class="third-head"><span>#</span><span>SELECCIÓN</span><span>GRUPO</span><span>PJ</span><span>GF</span><span>GC</span><span>DG</span><span>PTS</span><span>ESTADO</span></div>`;
+    const head = `<div class="third-head"><span>#</span><span>SELECCIÓN</span><span>PJ</span><span>PTS</span><span>DG</span><span>ESTADO</span></div>`;
     const rows = model.thirds.map((row, index) => {
       const inZone = index < 8;
       let label = inZone ? (model.allComplete ? "Clasificado" : "En zona") : (model.allComplete ? "Eliminado" : "Fuera por ahora");
       if (!model.completed) label = "Por jugar";
+      const gdClass = row.gd > 0 ? "positive" : row.gd < 0 ? "negative" : "";
       return `<div class="third-row ${inZone && model.completed ? "is-qualifying" : ""}">
-        <span><strong>${index + 1}</strong></span>
-        <span class="third-team">${flag(row.name)}${row.name}</span>
-        <span>Grupo ${row.group}</span><span>${row.played}</span><span>${row.gf}</span><span>${row.ga}</span>
-        <span>${row.gd > 0 ? "+" : ""}${row.gd}</span><strong>${row.points}</strong>
+        <span class="third-rank"><strong>${index + 1}</strong></span>
+        <span class="third-team">${flag(row.name)}<span><span class="third-name">${row.name}</span><small>Grupo ${row.group}</small></span></span>
+        <span class="third-stat third-played"><small>PJ</small><strong>${row.played}</strong></span>
+        <span class="third-stat third-points"><small>PTS</small><strong>${row.points}</strong></span>
+        <span class="third-stat third-gd ${gdClass}"><small>DG</small><strong>${row.gd > 0 ? "+" : ""}${row.gd}</strong></span>
         <span class="third-status ${inZone && model.completed ? "in" : ""}">${label}</span>
       </div>`;
     }).join("");

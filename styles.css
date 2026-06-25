@@ -250,14 +250,24 @@ main { max-width: 1488px; margin: auto; padding: 40px 24px 70px; }
 .info-card__icon { display: grid; place-items: center; width: 21px; height: 21px; flex: 0 0 auto; border-radius: 50%; background: var(--green-800); color: white; font-family: serif; font-weight: 800; }
 
 .table-card { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: var(--shadow); }
-.thirds-table { min-width: 720px; }
-.third-head, .third-row { display: grid; grid-template-columns: 48px minmax(210px, 1fr) 70px repeat(6, 58px) 140px; align-items: center; }
+.table-card--wide { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+.thirds-table { min-width: 0; }
+.third-head, .third-row { display: grid; grid-template-columns: 42px minmax(170px, 1fr) 48px 56px 56px 118px; column-gap: 6px; align-items: center; }
 .third-head { min-height: 43px; padding: 0 18px; background: var(--green-900); color: rgba(255,255,255,.72); font-size: 10px; font-weight: 800; }
 .third-row { min-height: 54px; padding: 0 18px; border-bottom: 1px solid #e9e9e3; font-size: 12px; }
 .third-row:last-child { border: 0; }
 .third-row.is-qualifying { background: linear-gradient(90deg, rgba(223,242,232,.7), transparent 38%); }
 .third-row > span:not(:nth-child(2)), .third-head > span:not(:nth-child(2)) { text-align: center; }
 .third-team { display: flex; align-items: center; gap: 9px; font-weight: 800; }
+.third-team > span { min-width: 0; }
+.third-name { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.third-team small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 700; }
+.third-stat { font-weight: 900; }
+.third-stat small { display: none; }
+.third-points { color: var(--green-800); }
+.third-gd { font-weight: 900; }
+.third-gd.positive { color: var(--green-800); }
+.third-gd.negative { color: #b84e45; }
 .third-status { justify-self: end; padding: 5px 9px; border-radius: 20px; background: #ecece6; color: var(--muted); font-size: 10px; font-weight: 800; }
 .third-status.in { background: var(--green-100); color: var(--green-800); }
 
@@ -328,12 +338,42 @@ dialog input:focus { border-color: var(--green-600); box-shadow: 0 0 0 3px rgba(
   .section-heading > p { margin-top: 10px; text-align: left; }
   .tabs { overflow-x: auto; }
   .tab { white-space: nowrap; }
+  .table-card--wide { overflow: visible; }
+  .thirds-table { display: grid; gap: 10px; padding: 10px; background: #f8f7f0; }
+  .third-head { display: none; }
+  .third-row {
+    min-height: 0;
+    padding: 10px;
+    grid-template-columns: 32px repeat(3, minmax(0, 1fr)) minmax(62px, auto);
+    grid-template-areas:
+      "rank team team team status"
+      "rank played points gd status";
+    column-gap: 7px;
+    row-gap: 9px;
+    border: 1px solid #e6e6df;
+    border-radius: 13px;
+    background: white;
+    font-size: 11px;
+  }
+  .third-row.is-qualifying { background: linear-gradient(135deg, rgba(223,242,232,.86), white 72%); }
+  .third-rank { grid-area: rank; align-self: start; display: grid; place-items: center; width: 27px; height: 27px; border-radius: 9px; background: #ebece6; color: var(--muted); }
+  .third-row.is-qualifying .third-rank { background: var(--green-100); color: var(--green-800); }
+  .third-team { grid-area: team; min-width: 0; }
+  .third-played { grid-area: played; }
+  .third-points { grid-area: points; }
+  .third-gd { grid-area: gd; }
+  .third-stat { display: grid; gap: 2px; padding: 6px 4px; border-radius: 9px; background: #f0f1eb; text-align: center; }
+  .third-stat small { display: block; margin: 0; color: var(--muted); font-size: 8px; font-weight: 800; letter-spacing: .08em; }
+  .third-stat strong { font-size: 13px; line-height: 1; }
+  .third-status { grid-area: status; align-self: center; justify-self: end; padding: 5px 7px; max-width: 76px; font-size: 9px; line-height: 1.1; text-align: center; }
   main { padding: 30px 14px 55px; }
   footer { display: grid; }
 }
 
 @media (max-width: 430px) {
   .standing-head, .standing-row { grid-template-columns: minmax(122px, 1fr) 24px 28px 26px 26px 31px; padding-left: 10px; padding-right: 10px; }
+  .third-row { grid-template-columns: 30px repeat(3, minmax(0, 1fr)) minmax(58px, auto); column-gap: 5px; padding: 9px; }
+  .third-status { max-width: 68px; padding-left: 5px; padding-right: 5px; }
   .team { font-size: 11px; }
   .score-boxes { margin: 0 5px; }
   .score-input { width: 31px; }
